@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import './App.css';
 import { LoginPage } from './LoginPage';
-import { RegisterPage } from './RegistrePage';
+import  RegisterPage  from './RegistrePage/RegisterPage';
 
 function App() {
   return (
