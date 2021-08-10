@@ -147,6 +147,7 @@ export default function RegisterPage(){
                                 </span>
                             </div>
                             <div>
+                                
                             <span>
                                 <label>ConfirmPassword</label>
                                 <input type="confimrpassword" id="confimrpassword"  value={confirmpassword}
@@ -161,6 +162,7 @@ export default function RegisterPage(){
                        
         );
 }
+
 
 
 
