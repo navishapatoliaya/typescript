@@ -71,16 +71,52 @@
 // }
 
 // export default LoginPage;
-import React, { Component } from 'react'
 
-export class LoginPage extends Component {
-    render() {
-        return (
+import React ,{useState}from 'react';
+import { Link } from 'react-router-dom';
+
+export default function LoginPage() {
+
+    const [state, setState] = useState({loading: false});
+        const [email, setEmail] = useState("");
+        const [password, setPassword] = useState("");
+
+    async function submitForm() {
+        setState({ ...state, loading: true});
+        const response = await fetch(`https://rails-to-do-list-narola.herokuapp.com/v1/login`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({email:email, password: password})
+        });
+        const content = await response.json();
+        setState({ ...state, loading: false});
+      }
+
+    return (
+        <div>
+            <h1>Login</h1>
             <div>
-                <h1>login</h1>
-            </div>
-        )
-    }
-}
+                                <span>
+                                    <label>Email</label>
+                                    <input type="input" id='email'  value={email}  
+                                    onChange={e => setEmail(e.target.value)}></input>
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    <label>Password</label>
+                                    <input type="password" id="password" value={password}
+                                    onChange={e => setPassword(e.target.value)}></input>
+                                </span>
+                            </div>
+                            <button className="btn-join" onClick={submitForm}>
+                                {!state.loading ? 'Join Now!' : {/* <img src={loading} alt="loading" /> */}} 
+                            </button>  
+                            <Link to="/login">Register</Link> 
 
-export default LoginPage;
+        </div>
+    )
+}
