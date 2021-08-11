@@ -107,6 +107,7 @@
 
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function RegisterPage(){
 
@@ -132,6 +133,7 @@ export default function RegisterPage(){
 
           return (
             <div>
+                            <h1>Registration</h1>
                             <div>
                                 <span>
                                     <label>Email</label>
@@ -158,6 +160,7 @@ export default function RegisterPage(){
                             <button className="btn-join" onClick={submitForm}>
                                 {!state.loading ? 'Join Now!' : {/* <img src={loading} alt="loading" /> */}} 
                             </button>    
+                            <Link to="/login">cancle</Link>
             </div>
                        
         );

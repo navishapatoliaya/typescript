@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import './App.css';
-import { LoginPage } from './LoginPage';
+import  LoginPage  from './LoginPage/LoginPage';
 import  RegisterPage  from './RegistrePage/RegisterPage';
 
 function App() {
