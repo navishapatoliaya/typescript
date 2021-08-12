@@ -105,73 +105,143 @@
 
 // export default RegisterPage;
 
+/* second method */
+// import React, { useState } from 'react';
+// import { Link } from 'react-router-dom';
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// export default function RegisterPage(){
 
-export default function RegisterPage(){
+//         const [state, setState] = useState({loading: false});
+//         const [email, setEmail] = useState("");
+//         const [password, setPassword] = useState("");
+//         const [confirmpassword, setConfirmpassword] = useState("");
 
-        const [state, setState] = useState({loading: false});
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState("");
-        const [confirmpassword, setConfirmpassword] = useState("");
-
-        async function submitForm() {
-            setState({ ...state, loading: true});
-            const response = await fetch(`https://rails-to-do-list-narola.herokuapp.com/v1/signup`, {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({email:email, password: password,confirmpassword:confirmpassword})
-            });
-            const content = await response.json();
-            setState({ ...state, loading: false});
-          }
+//         async function submitForm() {
+//             setState({ ...state, loading: true});
+//             const response = await fetch(`https://rails-to-do-list-narola.herokuapp.com/v1/signup`, {
+//               method: 'POST',
+//               headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json'
+//               },
+//               body: JSON.stringify({email:email, password: password,confirmpassword:confirmpassword})
+//             });
+//             const content = await response.json();
+//             setState({ ...state, loading: false});
+//           }
 
 
-          return (
-            <div>
-                            <h1>Registration</h1>
-                            <div>
-                                <span>
-                                    <label>Email</label>
-                                    <input type="input" id='email'  value={email}  
-                                    onChange={e => setEmail(e.target.value)}></input>
-                                </span>
-                            </div>
-                            <div>
-                                <span>
-                                    <label>Password</label>
-                                    <input type="password" id="password" value={password}
-                                    onChange={e => setPassword(e.target.value)}></input>
-                                </span>
-                            </div>
-                            <div>
+//           return (
+//             <div>
+//                             <h1>Registration</h1>
+//                             <div>
+//                                 <span>
+//                                     <label>Email</label>
+//                                     <input type="input" id='email'  value={email}  
+//                                     onChange={e => setEmail(e.target.value)}></input>
+//                                 </span>
+//                             </div>
+//                             <div>
+//                                 <span>
+//                                     <label>Password</label>
+//                                     <input type="password" id="password" value={password}
+//                                     onChange={e => setPassword(e.target.value)}></input>
+//                                 </span>
+//                             </div>
+//                             <div>
                                 
-                            <span>
-                                <label>ConfirmPassword</label>
-                                <input type="confimrpassword" id="confimrpassword"  value={confirmpassword}
-                                 onChange={e => setConfirmpassword(e.target.value)}></input>
-                            </span> 
-                            </div> 
+//                             <span>
+//                                 <label>ConfirmPassword</label>
+//                                 <input type="confimrpassword" id="confimrpassword"  value={confirmpassword}
+//                                  onChange={e => setConfirmpassword(e.target.value)}></input>
+//                             </span> 
+//                             </div> 
                              
-                            <button className="btn-join" onClick={submitForm}>
-                                {!state.loading ? 'Join Now!' : {/* <img src={loading} alt="loading" /> */}} 
-                            </button>    
-                            <Link to="/login">cancle</Link>
-            </div>
+//                             <button className="btn-join" onClick={submitForm}>
+//                                 {!state.loading ? 'Join Now!' : {/* <img src={loading} alt="loading" /> */}} 
+//                             </button>    
+//                             <Link to="/login">cancle</Link>
+//             </div>
                        
-        );
-}
+//         );
+// }
+// export {RegisterPage};
 
 
+/* third method */
 
-
-
-
-
-
-
-export {RegisterPage};
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "../action/auth";
+import { Link } from "react-router-dom";
+const Register = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmpassword, setConfirmpassword] = useState("");
+    const [successful, setSuccessful] = useState(false);
+    const dispatch = useDispatch();
+    const onChangeConfirmpassword = (e: any) => {
+        const confirmpassword = e.target.value;
+        setConfirmpassword(confirmpassword);
+    };
+    const onChangeEmail = (e: any) => {
+        const email = e.target.value;
+        setEmail(email);
+    };
+    const onChangePassword = (e: any) => {
+        const password = e.target.value;
+        setPassword(password);
+    };
+    const handleRegister = (e: any) => {
+        e.preventDefault();
+        setSuccessful(false);
+        dispatch(register(email, password, confirmpassword))
+    };
+    return (
+        <div className="col-md-12">
+            <div className="card card-container">
+                <form onSubmit={handleRegister} >
+                    {!successful && (
+                        <div>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="email"
+                                    value={email}
+                                    onChange={onChangeEmail}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    name="password"
+                                    value={password}
+                                    onChange={onChangePassword}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="username">confirm password</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="confirmpassword"
+                                    value={confirmpassword}
+                                    onChange={onChangeConfirmpassword}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button className="btn btn-primary btn-block">Sign Up</button>
+                                <Link to="/login">Login</Link>
+                            </div>
+                        </div>
+                    )}
+                </form>
+            </div>
+        </div>
+    );
+};
+export default Register;

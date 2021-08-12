@@ -72,51 +72,118 @@
 
 // export default LoginPage;
 
-import React ,{useState}from 'react';
-import { Link } from 'react-router-dom';
+// import React ,{useState}from 'react';
+// import { Link } from 'react-router-dom';
 
-export default function LoginPage() {
+// export default function LoginPage() {
 
-    const [state, setState] = useState({loading: false});
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState("");
+//         const [state, setState] = useState({loading: false});
+//         const [email, setEmail] = useState("");
+//         const [password, setPassword] = useState("");
 
-    async function submitForm() {
-        setState({ ...state, loading: true});
-        const response = await fetch(`https://rails-to-do-list-narola.herokuapp.com/v1/login`, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({email:email, password: password})
-        });
-        const content = await response.json();
-        setState({ ...state, loading: false});
-      }
+//     async function submitForm() {
+//         setState({ ...state, loading: true});
+//         const response = await fetch(`https://rails-to-do-list-narola.herokuapp.com/v1/login`, {
+//           method: 'POST',
+//           headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json'
+//           },
+//           body: JSON.stringify({email:email, password: password})
+//         });
 
+
+//         const content = await response.json();
+//         setState({ ...state, loading: false});
+//       }
+
+//     return (
+//         <div>
+//             <h1>Login</h1>
+//             <div>
+//                                 <span>
+//                                     <label>Email</label>
+//                                     <input type="input" id='email'  value={email}  
+//                                     onChange={e => setEmail(e.target.value)}></input>
+//                                 </span>
+//                             </div>
+//                             <div>
+//                                 <span>
+//                                     <label>Password</label>
+//                                     <input type="password" id="password" value={password}
+//                                     onChange={e => setPassword(e.target.value)}></input>
+//                                 </span>
+//                             </div>
+//                             <button className="btn-join" onClick={submitForm}>
+//                                 {!state.loading ? 'Join Now!' : {/* <img src={loading} alt="loading" /> */}} 
+//                             </button>  
+//                             <Link to="/register">Register</Link> 
+
+//         </div>
+//     )
+// }
+
+
+/*  third code */ 
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "../action/auth";
+import { Link } from "react-router-dom";
+const LoginPage = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [successful, setSuccessful] = useState(false);
+    const dispatch = useDispatch();
+   
+    const onChangeEmail = (e: any) => {
+        const email = e.target.value;
+        setEmail(email);
+    };
+    const onChangePassword = (e: any) => {
+        const password = e.target.value;
+        setPassword(password);
+    };
+    const handleRegister = (e: any) => {
+        e.preventDefault();
+        setSuccessful(false);
+        dispatch(register(email, password))
+    };
     return (
-        <div>
-            <h1>Login</h1>
-            <div>
-                                <span>
-                                    <label>Email</label>
-                                    <input type="input" id='email'  value={email}  
-                                    onChange={e => setEmail(e.target.value)}></input>
-                                </span>
+        <div className="col-md-12">
+            <div className="card card-container">
+                <form onSubmit={handleRegister} >
+                    {!successful && (
+                        <div>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="email"
+                                    value={email}
+                                    onChange={onChangeEmail}
+                                />
                             </div>
-                            <div>
-                                <span>
-                                    <label>Password</label>
-                                    <input type="password" id="password" value={password}
-                                    onChange={e => setPassword(e.target.value)}></input>
-                                </span>
+                            <div className="form-group">
+                                <label htmlFor="password">Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    name="password"
+                                    value={password}
+                                    onChange={onChangePassword}
+                                />
                             </div>
-                            <button className="btn-join" onClick={submitForm}>
-                                {!state.loading ? 'Join Now!' : {/* <img src={loading} alt="loading" /> */}} 
-                            </button>  
-                            <Link to="/login">Register</Link> 
-
+                            
+                            <div className="form-group">
+                                <button className="btn btn-primary btn-block">Sign Up</button>
+                                <Link to="/login">Login</Link>
+                            </div>
+                        </div>
+                    )}
+                </form>
+            </div>
         </div>
-    )
-}
+    );
+};
+export default LoginPage;
