@@ -9,11 +9,13 @@ import {
   
   import AuthService from "../Services/auth-Service";
   import { useDispatch } from "react-redux";
+  import { history } from "../helper/history";
   
  
-  export const register = (username:string, email:string, password:string) => (dispatch:any) => {
-    return AuthService.register(username, email, password).then(
+  export const register = ( email:string, password:string) => (dispatch:any) => {
+    return AuthService.register(email, password).then(
       (response) => {
+        history.push('/login');
         dispatch({
           type: REGISTER_SUCCESS,
         });
@@ -47,15 +49,15 @@ import {
     );
   };
   
-  export const login = (username:string, password:string) => (dispatch:any) => {
-    return AuthService.login(username, password).then(
+  export const login = (email:string, password:string) => (dispatch:any) => {
+    return AuthService.login(email, password).then(
       (data) => {
         dispatch({
           type: LOGIN_SUCCESS,
           payload: { user: data },
         });
   
-
+        history.push('/home');
         return Promise.resolve();
       },
       (error) => {
