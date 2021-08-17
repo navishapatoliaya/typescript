@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import {  useSelector } from "react-redux";
-import { Container ,Button,Form ,FormGroup,Row,Col} from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { Container ,Button,Form ,FormGroup,Row,Col,Dropdown} from "react-bootstrap";
+import userService from "../Services/user-Service";
 
-import add from "../Services/auth-Service";
 
 
 const AddData= ()=>{
@@ -25,6 +25,30 @@ const onChangepriority = (e: any) => {
   const priority = e.target.value;
   setpriority(priority);
 };
+const history =useHistory();
+    const logout = () => {
+        localStorage.removeItem('auth_token');
+        history.push('/login');
+      }
+
+      const PopPop = () => {
+        <div className="dropdown">
+        <Dropdown>
+            <Dropdown.Toggle
+            variant="secondary btn-sm" 
+            id="dropdown-basic">
+              To Do Added Successfully
+              
+            </Dropdown.Toggle>
+            <Dropdown.Menu style={{backgroundColor:'#73a47'}}>
+                <Dropdown.Item href="/home" >cancle</Dropdown.Item>
+                <Dropdown.Item href="/">English</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+
+      </div> 
+       
+      }
 const handleAddData = (e: any) => {
     e.preventDefault();
     
@@ -41,12 +65,34 @@ const handleAddData = (e: any) => {
     .then(data =>{
         console.log('Success:',data);
         console.log('token:',data.auth_token);
+       
     })
     .catch((error)=>{
         console.error('Error:',error);
-    });
-
+    });   
 };
+
+const [posts, setPosts] = useState([]);
+
+  
+      userService.getAddData().then(
+        (response) => {
+          const { data = [] } = response;
+          setPosts(data.data.todos);
+          console.log("show data:::::::::::::",response.data.data)
+        },
+        (error) => {
+          const _data1 =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+            setPosts(_data1);
+        }
+      );
+  
+
 
     return(
         
@@ -55,7 +101,7 @@ const handleAddData = (e: any) => {
                  
               <div>
                   <div className="row">
-                    <Form.Group className="mb-3" controlId="duedate">
+                    <Form.Group className="mb-3" controlId="data">
                       <Col md={{ span: 5, offset: 3}}>
                         <h3>Add New ToDo</h3>
                       <Form.Control
@@ -78,7 +124,7 @@ const handleAddData = (e: any) => {
                       </Col>
                      </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="duedate">
+                    <Form.Group className="mb-3" controlId="priority">
                       <Col md={{ span: 5, offset: 3}}>
                       <Form.Control
                         type="number"
@@ -89,17 +135,52 @@ const handleAddData = (e: any) => {
                      </Form.Group>
                     
                     <Col md={{ span: 3, offset: 4 }}>
-                      <Button   variant="primary" type="=submit">
+                      <Button   variant="primary" type="=submit" onClick={PopPop}>
                                 Create To Do
+                               
+                      </Button>
+
+                      <Button   variant="primary" type="=submit" onClick={logout}>
+                                Logout
                       </Button>
                     </Col>
+                    <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Due_Date</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        posts.length !== 0 ?
+                            posts.map((post:any, index:any) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{post.id}</td>
+                                        <td>{post.data}</td>
+                                        <td>{post.due_date}</td>
+                                        <td>{post.priority}</td>
+                                    </tr>
+                                )
+                            })
+                            : 'No data found'
+                    }
+                </tbody>
+            </table>
+
                  </div>
                 </div>
+
+               
+                
               
               </Form>
              
             </Container>
-        
+            
     )
 }
 

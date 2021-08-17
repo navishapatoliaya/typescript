@@ -25,42 +25,7 @@ const LoginPage = () => {
         dispatch(login(email, password))
     };
     return (
-        // <div className="col-md-12">
-        //     <div className="card card-container">
-        //         <form onSubmit={handleRegister} >
-        //             {!successful && (
-        //                 <div>
-        //                     <div className="form-group">
-        //                         <label htmlFor="email">Email</label>
-        //                         <input
-        //                             type="email"
-        //                             className="form-control"
-        //                             name="email"
-        //                             value={email}
-        //                             onChange={onChangeEmail}
-        //                         />
-        //                     </div>
-        //                     <div className="form-group">
-        //                         <label htmlFor="password">Password</label>
-        //                         <input
-        //                             type="password"
-        //                             className="form-control"
-        //                             name="password"
-        //                             value={password}
-        //                             onChange={onChangePassword}
-        //                         />
-        //                     </div>
-                            
-        //                     <div className="form-group">
-        //                         <button className="btn btn-primary btn-block">Sign Up</button>
-        //                         <Link to="/register">Registration</Link>
-        //                     </div>
-        //                 </div>
-        //             )}
-        //         </form>
-        //     </div>
-        // </div>
-        <Container>
+         <Container>
             <Form onSubmit={handleLogin}> 
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">

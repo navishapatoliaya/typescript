@@ -1,4 +1,6 @@
 import axios from "axios";
+import { Dropdown } from "react-bootstrap";
+
 
 const API_URL= "https://rails-to-do-list-narola.herokuapp.com/v1/";
 
@@ -21,6 +23,7 @@ const login = (email:string, password:string) => {
     })
     .then((response) => {
         localStorage.setItem("auth_token", response.data.data.auth_token);
+        
         console.log("data::::", response.data);
         console.log("data::::", response.data.data.auth_token);
 
@@ -37,6 +40,23 @@ const add = (data:any,due_date:any,priority:any) => {
 const logout = () => {
   localStorage.removeItem("user");
 };
+const PopPop =()=>{
+    <div className="dropdown">
+                                  <Dropdown>
+                                      <Dropdown.Toggle
+                                      variant="secondary btn-sm" 
+                                      id="dropdown-basic">
+                                        To Do Added Successfully
+                                        
+                                      </Dropdown.Toggle>
+                                      <Dropdown.Menu style={{backgroundColor:'#73a47'}}>
+                                          <Dropdown.Item href="/home" >cancle</Dropdown.Item>
+                                          <Dropdown.Item href="/">English</Dropdown.Item>
+                                      </Dropdown.Menu>
+                                  </Dropdown>
+
+                                </div> 
+}
 
 export default {
   register,
