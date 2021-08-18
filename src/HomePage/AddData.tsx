@@ -1,7 +1,8 @@
 import React, {  useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Container ,Button,Form ,FormGroup,Row,Col,Dropdown} from "react-bootstrap";
-
+import { MDBIcon} from "mdbreact";
+import { PersonPlusFill } from 'react-bootstrap-icons';
 
 
 
@@ -81,6 +82,9 @@ const handleAddData = (e: any) => {
               <div>
                   <div className="row">
                     <Form.Group className="mb-3" controlId="data">
+                    <Col md={{ span: 5, offset: 3}}>
+                    <PersonPlusFill className="ml-4" color="royalblue" size={50}/>
+                    </Col>
                       <Col md={{ span: 5, offset: 3}}>
                         <h3>Add New ToDo</h3>
                       <Form.Control

@@ -6,6 +6,8 @@ import  RegisterPage  from './RegistrePage/RegisterPage';
 import { history } from './helper/history';
 import HomePage  from './HomePage/HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
+// import 'mdbreact/dist/css/mdb.css';
 import AddData from "./HomePage/AddData"
 
 function App() {

@@ -1,13 +1,18 @@
 import React ,{useEffect ,useState} from 'react'
 import AddData from './AddData'
-import { Button } from 'react-bootstrap';
+import { Button ,Table} from 'react-bootstrap';
 import userService from "../Services/user-Service";
+import BootstrapTable from 'react-bootstrap-table-next';
+import { MDBIcon} from "mdbreact";
+
+
 
 
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
-useEffect(()=>{
+    
+    useEffect(()=>{
   
       userService.getAddData().then(
         (response) => {
@@ -40,17 +45,49 @@ useEffect(()=>{
             })
     }
     
-
+    // const columns=[
+    //     {
+    //         dataField:'id',
+    //         text: "ID"
+    //     },
+    //     {
+    //         dataField:'data',
+    //         text: "Data",
+    //         sort:true
+    //     },
+    //     {
+    //         dataField:'due_date',
+    //         text: "Due_Date",
+    //         sort:true
+    //     },
+    //     {
+    //         dataField:'priority',
+    //         text: "Priority",
+    //         sort:true
+    //     },
+    //     {
+    //         dataField:'priority',
+    //         text: "Priority",
+    //         sort:true
+    //     },
+    // ]
+    // const defaultSortedBy = [{
+    //     dataField: "data",
+    //     order: "asc"  // or desc
+    // }];
     return (
         <div>
             < AddData />
-            <table>
+             {/* <MDBIcon icon="portrait" /> */}
+             <MDBIcon icon="spinner" spin size="3x" fixed />
+            <Table striped bordered hover >
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Data</th>
                         <th>Due_Date</th>
                         <th>Priority</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,14 +100,30 @@ useEffect(()=>{
                                         <td>{post.data}</td>
                                         <td>{post.due_date}</td>
                                         <td>{post.priority}</td>
+                                        <td>
                                         <Button variant="primary" onClick={()=>onDelete(post.id) }>Delete</Button>
+                                        </td>
+                                       
                                     </tr>
                                 )
                             })
                             : 'No data found'
                     }
+                    
                 </tbody>
-            </table>
+            </Table>
+            {/* < BootstrapTable 
+
+                keyField="id"
+                data={posts}
+                columns={columns}
+                // defaultSortedBy={defaultSortedBy}
+                
+                
+            >
+
+            </BootstrapTable> */}
+            
         </div>
-    )
+    );
 }
