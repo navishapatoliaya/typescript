@@ -7,8 +7,8 @@ import {
     SET_MESSAGE,
   } from "./types";
   
-  import AuthService from "../Services/auth-Service";
-  import { history } from "../helper/history";
+import AuthService from "../Services/auth-Service";
+import { history } from "../helper/history";
   
  
   export const register = ( email:string, password:string) => (dispatch:any) => {
