@@ -18,10 +18,14 @@ const getModeratorBoard = () => {
 const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
-
+const deletedata = (id:any) =>{
+  return axios.delete(`https://rails-to-do-list-narola.herokuapp.com/v1/todos/${id}`,{headers:authHeader() });
+  
+};
 export default {
   getPublicContent,
   getAddData,
   getModeratorBoard,
   getAdminBoard,
+  deletedata
 };

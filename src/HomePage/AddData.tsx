@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Container ,Button,Form ,FormGroup,Row,Col,Dropdown} from "react-bootstrap";
-import userService from "../Services/user-Service";
+
 
 
 
@@ -72,27 +72,6 @@ const handleAddData = (e: any) => {
     });   
 };
 
-const [posts, setPosts] = useState([]);
-
-  
-      userService.getAddData().then(
-        (response) => {
-          const { data = [] } = response;
-          setPosts(data.data.todos);
-          console.log("show data:::::::::::::",response.data.data)
-        },
-        (error) => {
-          const _data1 =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-            setPosts(_data1);
-        }
-      );
-  
-
 
     return(
         
@@ -139,37 +118,13 @@ const [posts, setPosts] = useState([]);
                                 Create To Do
                                
                       </Button>
+                      &nbsp;&nbsp;
 
                       <Button   variant="primary" type="=submit" onClick={logout}>
                                 Logout
                       </Button>
                     </Col>
-                    <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Due_Date</th>
-                        <th>Priority</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        posts.length !== 0 ?
-                            posts.map((post:any, index:any) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{post.id}</td>
-                                        <td>{post.data}</td>
-                                        <td>{post.due_date}</td>
-                                        <td>{post.priority}</td>
-                                    </tr>
-                                )
-                            })
-                            : 'No data found'
-                    }
-                </tbody>
-            </table>
+                   
 
                  </div>
                 </div>
