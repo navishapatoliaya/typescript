@@ -42,15 +42,12 @@ const logout = () => {
 };
 
 
-const PopPop =()=>{
-    
-}
 
 export default {
   register,
   login,
   logout,
   add,
-  PopPop,
+
   
 };
