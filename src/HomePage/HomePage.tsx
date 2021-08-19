@@ -2,12 +2,8 @@ import React ,{useEffect ,useState} from 'react'
 import AddData from './AddData'
 import { Button ,Table} from 'react-bootstrap';
 import userService from "../Services/user-Service";
-import BootstrapTable from 'react-bootstrap-table-next';
-import { MDBIcon} from "mdbreact";
-
-
-
-
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { PersonPlusFill } from 'react-bootstrap-icons';
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
@@ -45,6 +41,13 @@ export default function HomePage() {
             })
     }
     
+    const onSort=()=>{
+        userService.Sortdata()
+        .then((getData) => {
+            setPosts(getData.data.data.todos);
+        })
+    }
+
     // const columns=[
     //     {
     //         dataField:'id',
@@ -71,16 +74,28 @@ export default function HomePage() {
     //         sort:true
     //     },
     // ]
-    // const defaultSortedBy = [{
-    //     dataField: "data",
-    //     order: "asc"  // or desc
-    // }];
+    <style type="text/css">
+        {`
+            .btn-flat{
+                backgroung-color:#08c
+                color:white
+            }
+            .btn-xxl{
+                padding:1rem 1.5rem;
+                font-size:1.5rem;
+            }
+        `}
+    </style>
+      function buttonFormatter(id:any){
+        return <Button onClick={()=>onDelete(id)}>Delete</Button>;
+      }
     return (
         <div>
-            < AddData />
+            
+            <div>
              {/* <MDBIcon icon="portrait" /> */}
-             <MDBIcon icon="spinner" spin size="3x" fixed />
-            <Table striped bordered hover >
+             
+            {/* <Table striped bordered hover >
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -111,19 +126,22 @@ export default function HomePage() {
                     }
                     
                 </tbody>
-            </Table>
-            {/* < BootstrapTable 
-
-                keyField="id"
-                data={posts}
-                columns={columns}
-                // defaultSortedBy={defaultSortedBy}
-                
-                
-            >
-
-            </BootstrapTable> */}
+            </Table> */}
+            <div>
             
-        </div>
+            <PersonPlusFill className="ml-4" color="royalblue" size={50}/>ToDos List
+           
+            </div>
+           </div>
+           <BootstrapTable data={posts} striped={true} hover={true}>
+                <TableHeaderColumn dataField='id' dataSort isKey>ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='data' dataSort >Data</TableHeaderColumn>
+                <TableHeaderColumn dataField='due_date' dataSort>Due_Date</TableHeaderColumn>
+                <TableHeaderColumn dataField='priority' dataSort>Priority</TableHeaderColumn>
+                <TableHeaderColumn dataField='id' dataFormat={buttonFormatter} >Delete</TableHeaderColumn>
+           </BootstrapTable>
+        
+           </div>
+            
     );
 }

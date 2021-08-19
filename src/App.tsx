@@ -6,9 +6,8 @@ import  RegisterPage  from './RegistrePage/RegisterPage';
 import { history } from './helper/history';
 import HomePage  from './HomePage/HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
-// import 'mdbreact/dist/css/mdb.css';
-import AddData from "./HomePage/AddData"
+// import 'node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+import { AddData } from './HomePage';
 
 function App() {
   return (
@@ -18,7 +17,10 @@ function App() {
           <Switch>
             <Route exact path ="/home" component={HomePage} />
             <Route path ="/login" component={LoginPage} />
+            <Route path="/adddata" component={AddData} />
             <Route path="/" component={RegisterPage} />
+           
+            
             <Redirect from ="*" to="/" />
             
           </Switch>

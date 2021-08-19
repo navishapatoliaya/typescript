@@ -1,8 +1,7 @@
 import React, {  useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Container ,Button,Form ,FormGroup,Row,Col,Dropdown} from "react-bootstrap";
-import { MDBIcon} from "mdbreact";
-import { PersonPlusFill } from 'react-bootstrap-icons';
+import { Container ,Button,Form ,FormGroup,Row,Col,Modal} from "react-bootstrap";
+
 
 
 
@@ -32,24 +31,7 @@ const history =useHistory();
         history.push('/login');
       }
 
-      const PopPop = () => {
-        <div className="dropdown">
-        <Dropdown>
-            <Dropdown.Toggle
-            variant="secondary btn-sm" 
-            id="dropdown-basic">
-              To Do Added Successfully
-              
-            </Dropdown.Toggle>
-            <Dropdown.Menu style={{backgroundColor:'#73a47'}}>
-                <Dropdown.Item href="/home" >cancle</Dropdown.Item>
-                <Dropdown.Item href="/">English</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
-
-      </div> 
-       
-      }
+     
 const handleAddData = (e: any) => {
     e.preventDefault();
     
@@ -73,7 +55,20 @@ const handleAddData = (e: any) => {
     });   
 };
 
+const nextpath = (path: any) => {
+  history.push(path);
+};
 
+
+const [isOpen, setIsOpen] = React.useState(false);
+
+  const showModal = () => {
+    setIsOpen(true);
+  };
+
+  const hideModal = () => {
+    setIsOpen(false);
+  };
     return(
         
         <Container>
@@ -83,7 +78,7 @@ const handleAddData = (e: any) => {
                   <div className="row">
                     <Form.Group className="mb-3" controlId="data">
                     <Col md={{ span: 5, offset: 3}}>
-                    <PersonPlusFill className="ml-4" color="royalblue" size={50}/>
+                    
                     </Col>
                       <Col md={{ span: 5, offset: 3}}>
                         <h3>Add New ToDo</h3>
@@ -118,7 +113,7 @@ const handleAddData = (e: any) => {
                      </Form.Group>
                     
                     <Col md={{ span: 3, offset: 4 }}>
-                      <Button   variant="primary" type="=submit" onClick={PopPop}>
+                      <Button   variant="primary" type="=submit" onClick={showModal}>
                                 Create To Do
                                
                       </Button>
@@ -128,15 +123,19 @@ const handleAddData = (e: any) => {
                                 Logout
                       </Button>
                     </Col>
-                   
-
-                 </div>
                 </div>
-
-               
-                
-              
-              </Form>
+              </div>
+                </Form>
+                <Modal show={isOpen} onHide={hideModal}>
+                <Modal.Header>
+                  <Modal.Title>Hi</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>TODo Addedd successfully</Modal.Body>
+                <Modal.Footer>
+                  <button onClick={hideModal}>Cancel</button>
+                  <button onClick={() => nextpath("/home")}>Back to TODo List</button>
+                </Modal.Footer>
+              </Modal>
              
             </Container>
             
