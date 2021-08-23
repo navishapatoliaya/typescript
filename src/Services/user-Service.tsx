@@ -18,18 +18,18 @@ const getModeratorBoard = () => {
 const getAdminBoard = () => {
   return axios.get(API_URL + "admin", { headers: authHeader() });
 };
-const deletedata = (id:any) =>{
-  return axios.delete(`https://rails-to-do-list-narola.herokuapp.com/v1/todos/${id}`,{headers:authHeader() });
-  
+const DeleteData = (id: any) => {
+  return axios.delete(`https://rails-to-do-list-narola.herokuapp.com/v1/todos/${id}`, { headers: authHeader() });
 };
-const Sortdata=()=>{
-  return axios.get('https://rails-to-do-list-narola.herokuapp.com/v1/todos?limit=10&offset=0&sort_by=id&sort_direction=desc',{headers:authHeader() } )
+
+const SortData =(sort_by: string = 'id', sort_direction: string = 'asc') => {
+  return axios.get(`https://rails-to-do-list-narola.herokuapp.com/v1/todos?limit=10&offset=0&sort_by=${sort_by}&sort_direction=${sort_direction}` ,{headers: authHeader()})
 }
 export default {
   getPublicContent,
   getAddData,
   getModeratorBoard,
   getAdminBoard,
-  deletedata,
-  Sortdata
+  DeleteData,
+  SortData
 };

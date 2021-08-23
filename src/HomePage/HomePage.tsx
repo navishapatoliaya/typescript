@@ -1,12 +1,17 @@
 import React ,{useEffect ,useState} from 'react'
-import AddData from './AddData'
-import { Button ,Table} from 'react-bootstrap';
+import { Button,Modal} from 'react-bootstrap';
 import userService from "../Services/user-Service";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { PersonPlusFill } from 'react-bootstrap-icons';
+import { useHistory } from "react-router-dom";
+import CustomModel from './CustomModel';
+import Module from 'module';
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
+    const[id,setId]=useState(null);
+    const history =useHistory();
+    const[direction, setDirection] = useState('asc');
     
     useEffect(()=>{
   
@@ -28,120 +33,112 @@ export default function HomePage() {
       );
   
     },[])
+
+    useEffect(() => {
+        
+        return () => {
+                
+    userService.SortData('id', direction)
+        .then((getData) => {
+            setPosts(getData.data.data.todos);
+        })
+        }
+    }, [direction]);
+
     const getData = () => {
         userService.getAddData()
             .then((getData) => {
                 setPosts(getData.data.data.todos);
             })
+
     }
     const onDelete = (id: any) => {
-        userService.deletedata(id)
+
+        userService.DeleteData(id)
             .then(() => {
                 getData();
             })
+            setIsOpen(false);
     }
-    
-    const onSort=()=>{
-        userService.Sortdata()
-        .then((getData) => {
-            setPosts(getData.data.data.todos);
-        })
-    }
-
-    // const columns=[
-    //     {
-    //         dataField:'id',
-    //         text: "ID"
-    //     },
-    //     {
-    //         dataField:'data',
-    //         text: "Data",
-    //         sort:true
-    //     },
-    //     {
-    //         dataField:'due_date',
-    //         text: "Due_Date",
-    //         sort:true
-    //     },
-    //     {
-    //         dataField:'priority',
-    //         text: "Priority",
-    //         sort:true
-    //     },
-    //     {
-    //         dataField:'priority',
-    //         text: "Priority",
-    //         sort:true
-    //     },
-    // ]
-    <style type="text/css">
-        {`
-            .btn-flat{
-                backgroung-color:#08c
-                color:white
-            }
-            .btn-xxl{
-                padding:1rem 1.5rem;
-                font-size:1.5rem;
-            }
-        `}
-    </style>
+   
+    const nextpath = (path: any) => {
+        history.push(path);
+      };
+ 
       function buttonFormatter(id:any){
-        return <Button onClick={()=>onDelete(id)}>Delete</Button>;
+          console.log(id);
+        return <Button onClick={()=>showModal(id)} >Delete</Button>;
       }
+
+    const getCaret = (order: any) => {
+    console.log(order);
+    setDirection(order)
+      
+    if (order === 'asc') {
+      return (
+        <span> up</span>
+      );
+    }
+    if (order === 'desc') {
+      return (
+        <span> down</span>
+      );
+    }
+    return (
+      <span> up/down</span>
+    );
+  }
+    const [isOpen, setIsOpen] = React.useState(false);
+
+    const showModal = (id:any) => {
+        setId(id);
+        setIsOpen(true);
+      };
+    
+    const hideModal = () => {
+        setIsOpen(false);
+      };
+    
     return (
         <div>
             
-            <div>
-             {/* <MDBIcon icon="portrait" /> */}
-             
-            {/* <Table striped bordered hover >
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Due_Date</th>
-                        <th>Priority</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        posts.length !== 0 ?
-                            posts.map((post:any, index:any) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{post.id}</td>
-                                        <td>{post.data}</td>
-                                        <td>{post.due_date}</td>
-                                        <td>{post.priority}</td>
-                                        <td>
-                                        <Button variant="primary" onClick={()=>onDelete(post.id) }>Delete</Button>
-                                        </td>
-                                       
-                                    </tr>
-                                )
-                            })
-                            : 'No data found'
-                    }
-                    
-                </tbody>
-            </Table> */}
-            <div>
-            
-            <PersonPlusFill className="ml-4" color="royalblue" size={50}/>ToDos List
-           
-            </div>
-           </div>
-           <BootstrapTable data={posts} striped={true} hover={true}>
-                <TableHeaderColumn dataField='id' dataSort isKey>ID</TableHeaderColumn>
-                <TableHeaderColumn dataField='data' dataSort >Data</TableHeaderColumn>
+            <PersonPlusFill className="ml-4" color="royalblue" size={50} onClick={()=>nextpath("/adddata")}/>ToDos List
+        
+           <BootstrapTable data={posts} striped={true} hover={true} tableStyle={ { background: '#e6e6e6' }  } headerStyle={ { background: '#b3b3b3' } }>
+                
+                <TableHeaderColumn dataField='id' dataSort isKey  caretRender={(sort) => getCaret(sort)}>ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='data' dataSort  >Data</TableHeaderColumn>
                 <TableHeaderColumn dataField='due_date' dataSort>Due_Date</TableHeaderColumn>
                 <TableHeaderColumn dataField='priority' dataSort>Priority</TableHeaderColumn>
-                <TableHeaderColumn dataField='id' dataFormat={buttonFormatter} >Delete</TableHeaderColumn>
+                <TableHeaderColumn dataField='id' dataFormat={buttonFormatter}>Delete</TableHeaderColumn>
+          
            </BootstrapTable>
+
+            <Modal show={isOpen} onHide={hideModal}>
+                <Modal.Header>
+                  <Modal.Title>Hi</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are You Sure..?</Modal.Body>
+                <Modal.Footer>
+                  <button  onClick={hideModal}>Cancel</button>
+                  <button  onClick={() => onDelete(id)}>Ok</button>
+                  
+                </Modal.Footer>
+            </Modal>
+             {/* <CustomModel show={isOpen} onHide={hideModal}>
+                <Modal.Header>
+                  <Modal.Title> hii</Modal.Title>
+                </Modal.Header> 
+                <Modal.Body>Are You Sure..?</Modal.Body>
+                <Modal.Footer>
+                  <button  onClick={hideModal}>Cancel</button>
+                  <button  onClick={() => onDelete(id)}>Ok</button>
+                  
+                </Modal.Footer>
+            </CustomModel> */}
         
            </div>
+           
             
     );
 }

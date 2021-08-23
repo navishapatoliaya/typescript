@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { login} from "../action/auth";
 import { Link } from "react-router-dom";
 import { Container, Form ,Row,Col} from "react-bootstrap";
-import { FormGroup,FormCheck,Button} from "react-bootstrap";
+import { Button} from "react-bootstrap";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
