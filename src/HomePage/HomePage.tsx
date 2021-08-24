@@ -114,7 +114,7 @@ export default function HomePage() {
           
            </BootstrapTable>
 
-            <Modal show={isOpen} onHide={hideModal}>
+            {/* <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                   <Modal.Title>Hi</Modal.Title>
                 </Modal.Header>
@@ -123,19 +123,17 @@ export default function HomePage() {
                   <button  onClick={hideModal}>Cancel</button>
                   <button  onClick={() => onDelete(id)}>Ok</button>
                   
-                </Modal.Footer>
-            </Modal>
-             {/* <CustomModel show={isOpen} onHide={hideModal}>
-                <Modal.Header>
-                  <Modal.Title> hii</Modal.Title>
-                </Modal.Header> 
-                <Modal.Body>Are You Sure..?</Modal.Body>
-                <Modal.Footer>
-                  <button  onClick={hideModal}>Cancel</button>
-                  <button  onClick={() => onDelete(id)}>Ok</button>
-                  
-                </Modal.Footer>
-            </CustomModel> */}
+              </Modal.Footer>
+            </Modal> */}
+             <CustomModel 
+             show={isOpen} 
+             title={'hello'}
+             footer={'footer'}
+             onHide={hideModal}
+             onok={() => onDelete(id)}
+             body={'Are You Sure..?'}
+             />
+                
         
            </div>
            

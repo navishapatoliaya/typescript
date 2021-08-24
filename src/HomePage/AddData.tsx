@@ -2,7 +2,7 @@ import React, {  useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Container ,Button,Form ,Col,Modal} from "react-bootstrap";
 import { PersonPlusFill } from 'react-bootstrap-icons';
-
+import CustomModel from './CustomModel';
 
 
 const AddData= ()=>{
@@ -126,7 +126,7 @@ const [isOpen, setIsOpen] = React.useState(false);
                 </div>
               </div>
                 </Form>
-                <Modal show={isOpen} onHide={hideModal}>
+                {/* <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                   <Modal.Title>Hi</Modal.Title>
                 </Modal.Header>
@@ -135,7 +135,15 @@ const [isOpen, setIsOpen] = React.useState(false);
                   <button onClick={hideModal}>Cancel</button>
                   <button onClick={() => nextpath("/home")}>Back to TODo List</button>
                 </Modal.Footer>
-              </Modal>
+              </Modal> */}
+               <CustomModel 
+                show={isOpen} 
+                title={'Add the Data'}
+                footer={'footer'}
+                onHide={hideModal}
+                onok={() => nextpath("/home")}
+                body={'TODO Addedd Successfully'}
+             />
              
             </Container>
             

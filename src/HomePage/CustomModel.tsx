@@ -1,20 +1,22 @@
-import { Button,Modal} from 'react-bootstrap';
-import React ,{useEffect ,useState} from 'react'
+import { Modal} from 'react-bootstrap';
+
 
 interface  CustomModelProps{
     show?: boolean;
     onHide?: () => void;
-    Body:any;
-    Title:any;
-    Footer:any;
+    onok?:()=> void;
+    body:any;
+    title:any;
+    footer:any;
 }
 
 export default function CustomModel({
     show,
     onHide,
-    Body,
-    Title,
-    Footer,
+    onok,
+    body,
+    title,
+    footer,
 }:CustomModelProps) {
     
 return (
@@ -22,12 +24,12 @@ return (
 
             <Modal show={show} onHide={onHide}>
                 <Modal.Header>
-                  <Modal.Title>{Title}</Modal.Title>
+                  <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{Body}</Modal.Body>
+                <Modal.Body>{body}</Modal.Body>
                 <Modal.Footer>
                   <button  onClick={onHide}>Cancel</button>
-                  <button  onClick={Footer}>Ok</button>
+                  <button  onClick={onok}>Ok</button>
                   
                 </Modal.Footer>
             </Modal>
