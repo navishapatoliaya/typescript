@@ -1,16 +1,15 @@
 import React, {  useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Container ,Button,Form ,FormGroup,Row,Col,Modal} from "react-bootstrap";
-
-
+import { Container ,Button,Form ,Col,Modal} from "react-bootstrap";
+import { PersonPlusFill } from 'react-bootstrap-icons';
+import CustomModel from './CustomModel';
 
 
 const AddData= ()=>{
 const [data, setdata] = useState("");
 const [due_date, setdue_date] = useState("");
 const [priority, setpriority] = useState("");
-const [successful, setSuccessful] = useState(false);
-
+const history =useHistory();
 
 
 const onChangedata = (e: any) => {
@@ -25,7 +24,7 @@ const onChangepriority = (e: any) => {
   const priority = e.target.value;
   setpriority(priority);
 };
-const history =useHistory();
+
     const logout = () => {
         localStorage.removeItem('auth_token');
         history.push('/login');
@@ -81,7 +80,8 @@ const [isOpen, setIsOpen] = React.useState(false);
                     
                     </Col>
                       <Col md={{ span: 5, offset: 3}}>
-                        <h3>Add New ToDo</h3>
+                        <PersonPlusFill className="ml-4" color="royalblue" size={50} onClick={()=>nextpath("/home")} />Add New ToDo
+                        
                       <Form.Control
                         type="data"
                         placeholder="selectData"
@@ -126,7 +126,7 @@ const [isOpen, setIsOpen] = React.useState(false);
                 </div>
               </div>
                 </Form>
-                <Modal show={isOpen} onHide={hideModal}>
+                {/* <Modal show={isOpen} onHide={hideModal}>
                 <Modal.Header>
                   <Modal.Title>Hi</Modal.Title>
                 </Modal.Header>
@@ -135,7 +135,15 @@ const [isOpen, setIsOpen] = React.useState(false);
                   <button onClick={hideModal}>Cancel</button>
                   <button onClick={() => nextpath("/home")}>Back to TODo List</button>
                 </Modal.Footer>
-              </Modal>
+              </Modal> */}
+               <CustomModel 
+                show={isOpen} 
+                title={'Add the Data'}
+                footer={'footer'}
+                onHide={hideModal}
+                onok={() => nextpath("/home")}
+                body={'TODO Addedd Successfully'}
+             />
              
             </Container>
             
